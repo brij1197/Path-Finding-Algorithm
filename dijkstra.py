@@ -1,56 +1,42 @@
-import math
-from queue import PriorityQueue
+import pygame
 import dialogBox
 import main
-import pygame
-import mainSearch
+from queue import PriorityQueue
 
-
-def _dAlgorithm(draw,grid,start,end):
-    count=0
-    found=False
-    flag=False
+def _dAlgorithm(draw, grid, start, end):
+    count = 0
     originatedFrom = {}
-    set=PriorityQueue()
-    set.put((0,count,start))
-    dist={spt: float("inf") for row in grid for spt in row}
-    dist[start]=0
-    visited={start}
-    
-    while not set.empty():
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-        current=set.get()[2]
+    pq = PriorityQueue()
+    pq.put((0, count, start))
+    dist = {node: float("inf") for row in grid for node in row}
+    dist[start] = 0
+    visited = set([start])
 
-        if current==end:
-            temp=current
-            while temp.prev:
-                originatedFrom.append(temp.prev)
-                temp=temp.prev
-            if not flag:
-                flag=True
-                found=True
-                main.__reconstructPath(originatedFrom, end, draw)
-                dialogBox._dialogBox("Path Found")
+    while not pq.empty():
+        current_distance, _, current = pq.get()
 
-            elif flag:
-                continue
+        if current in visited and current != start:
+            continue
 
-        if flag==False:
-            for neighbour in current.neighbours:
-                temp_dist=dist[start]+1
-                if temp_dist < dist[neighbour]:
-                    dist[neighbour]=temp_dist
-                    originatedFrom[neighbour] = current
-                    if neighbour not in visited:
-                        count+=1
-                        visited.add(neighbour)
-                        set.put((dist[neighbour],count,neighbour))
-                        neighbour.makeVisited()
-            draw()
-            if current != start:
-                current.makeNotVisited()
-    if not found:
-        dialogBox._dialogBox("Path Not Found")
-        return False
+        visited.add(current)
+        
+        if current == end:
+            main.__reconstructPath(originatedFrom, end, draw)
+            dialogBox._dialogBox("Path Found")
+            return True
+
+        for neighbour in current.neighbours:
+            temp_dist = current_distance + 1  # Assuming edge weight is 1
+            if temp_dist < dist[neighbour]:
+                dist[neighbour] = temp_dist
+                originatedFrom[neighbour] = current
+                pq.put((temp_dist, count, neighbour))
+                neighbour.makeVisited()
+                count += 1
+        draw()
+
+        if current != start:
+            current.makeNotVisited()
+
+    dialogBox._dialogBox("Path Not Found")
+    return False

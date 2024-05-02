@@ -6,6 +6,8 @@ import mainSearch
 import dialogBox
 import dijkstra
 import argparse
+import bellmanford
+import breadthfirstsearch
 
 Red = (255, 0, 0)
 Green = (0, 255, 0)
@@ -29,9 +31,12 @@ pygame.display.set_caption("Path Finding Algorithm")
 
 def __reconstructPath(cameFrom,current,draw):
     while current in cameFrom:
-        current=cameFrom[current]
+        if current is None:
+            print("Error: Attempted to access a None node in path reconstruction.")
+            break
         current.makePath()
         draw()
+        current=cameFrom[current]
 
 def makeGrid(rows, width):
     grid = []
@@ -125,6 +130,10 @@ def main(win, width):
                         dijkstra._dAlgorithm(lambda: draw(win, grid, rows, width), grid, start, end)
                     elif args.option.lower()=="astar":
                         astar.__aAlgorithm(lambda: draw(win, grid, rows, width), grid, start, end)                                    
+                    elif args.option.lower()=="bellman":
+                        bellmanford.__bellmanFordAlgorithm(lambda: draw(win, grid, rows, width), grid, start, end)                                    
+                    elif args.option.lower()=="bfs":
+                        breadthfirstsearch.__breadthFirstSearch(lambda: draw(win, grid, rows, width), grid, start, end)                                    
                     else:
                         exit(0)
     
