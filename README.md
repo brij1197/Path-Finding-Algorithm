@@ -1,10 +1,40 @@
 # Path-Finding-Algorithm
 
-A pet project to illustrate the working of Dijkstra's and A* Path Finding Algorithm.
-This was done using PyGame.
+This repository contains implementations of various path-finding algorithms using PyGame. The algorithms are designed to demonstrate different approaches to finding the shortest path in a grid-based environment.
 
-# Usage:
+## Features
 
-To run the program, use the following command
-    py main.py -[algorithm]
- where algorithm is [Dijkstra or Astar]
+- Visual representation of different path-finding algorithms
+- Interactive grid for adding obstacles and setting start/end points
+- Comparison of algorithm efficiency and performance
+
+## Algorithms Implemented
+
+- A* (A-star)
+- Bellman-Ford
+- Breadth-First Search (BFS)
+- Dijkstra
+
+## Setup and Installation
+
+### Prerequisites
+
+- [Python](https://www.python.org/downloads/)
+- [PyGame](https://www.pygame.org/download.shtml)
+
+
+## Usage
+
+1. **Run the main script:**
+
+    ```sh
+    python main.py -[algorithm]
+    ```
+
+2. **Use the interactive grid to set the start point, end point, and obstacles.**
+
+3. **Select an algorithm to visualize its path-finding process.**
+
+## Project Structure
+
+
