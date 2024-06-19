@@ -32,5 +32,3 @@ This repository contains implementations of various path-finding algorithms usin
     ```
 
 2. **Use the interactive grid to set the start point, end point, and obstacles.**
-
-3. **Select an algorithm to visualize its path-finding process.**
